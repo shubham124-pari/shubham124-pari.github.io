@@ -4,6 +4,93 @@
 // ===============================
 
 // ===============================
+// Page Transition (advanced tech wipe effect)
+// ===============================
+
+const pageTransition = document.getElementById("pageTransition");
+
+window.addEventListener("DOMContentLoaded", () => {
+    if (pageTransition) {
+        requestAnimationFrame(() => {
+            pageTransition.classList.add("leave");
+        });
+    }
+});
+
+document.querySelectorAll('a[href$=".html"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (!href || href.startsWith("#") || link.hasAttribute("download") || link.target === "_blank") {
+            return;
+        }
+        e.preventDefault();
+        if (pageTransition) {
+            pageTransition.classList.remove("leave");
+            pageTransition.classList.add("enter");
+            setTimeout(() => {
+                window.location.href = href;
+            }, 550);
+        } else {
+            window.location.href = href;
+        }
+    });
+});
+
+
+// ===============================
+// Sign In Modal
+// ===============================
+
+const signInBtn = document.getElementById("signInBtn");
+const signInOverlay = document.getElementById("signInOverlay");
+const signInClose = document.getElementById("signInClose");
+const signInEmailToggle = document.getElementById("signInEmailToggle");
+const signInEmailForm = document.getElementById("signInEmailForm");
+
+if (signInBtn && signInOverlay) {
+
+    signInBtn.addEventListener("click", () => {
+        signInOverlay.classList.add("active");
+    });
+
+    signInClose.addEventListener("click", () => {
+        signInOverlay.classList.remove("active");
+    });
+
+    signInOverlay.addEventListener("click", (e) => {
+        if (e.target === signInOverlay) {
+            signInOverlay.classList.remove("active");
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            signInOverlay.classList.remove("active");
+        }
+    });
+
+    if (signInEmailToggle && signInEmailForm) {
+        signInEmailToggle.addEventListener("click", () => {
+            signInEmailForm.classList.toggle("active");
+        });
+
+        signInEmailForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            signInEmailForm.querySelector(".signin-submit").textContent = "Check your inbox ✔";
+        });
+    }
+
+    document.querySelectorAll(".signin-option.google, .signin-option.facebook").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const original = btn.innerHTML;
+            btn.innerHTML = "Coming soon...";
+            setTimeout(() => { btn.innerHTML = original; }, 1500);
+        });
+    });
+}
+
+
+// ===============================
 // Mobile Menu Toggle
 // ===============================
 

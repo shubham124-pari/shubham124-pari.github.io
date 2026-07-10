@@ -11,6 +11,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </head>
 <body>
 
+    <div id="pageTransition" class="page-transition"></div>
+
 <header class="header">
 
     <nav class="navbar">
@@ -57,6 +59,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
                 <li class="nav-item">
                     <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+
+                <li class="nav-item">
+                    <button class="signin-button" id="signInBtn">Sign In</button>
                 </li>
 
                 <li class="nav-item resume-item">
@@ -205,5 +211,45 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 
 <script src="assets/js/script.js"></script>
+
+    <div class="signin-overlay" id="signInOverlay">
+        <div class="signin-modal">
+            <button class="signin-close" id="signInClose" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="signin-tag">Welcome</span>
+            <h2 class="signin-title">Sign In to Continue</h2>
+            <p class="signin-subtitle">Access exclusive updates from Shubham Kumar's portfolio.</p>
+
+            <div class="signin-options">
+
+                <button class="signin-option google">
+                    <i class="fa-brands fa-google"></i>
+                    Continue with Google
+                </button>
+
+                <button class="signin-option facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                    Continue with Facebook
+                </button>
+
+                <button class="signin-option email" id="signInEmailToggle">
+                    <i class="fa-solid fa-envelope"></i>
+                    Continue with Email
+                </button>
+
+            </div>
+
+            <form class="signin-email-form" id="signInEmailForm">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit" class="signin-submit">Continue</button>
+            </form>
+
+            <p class="signin-note">Secure sign-in preview UI &mdash; connect Firebase or your backend to activate real authentication.</p>
+
+        </div>
+    </div>
+
 </body>
 </html>
