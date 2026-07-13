@@ -14,7 +14,7 @@
 const SKP_API_BASE =
     (location.hostname === "127.0.0.1" || location.hostname === "localhost")
         ? "http://127.0.0.1:5000/api"
-        : "https://YOUR-BACKEND-URL-HERE.onrender.com/api";
+        : "https://shubham-pr124.onrender.com/api";
 
 const SKP_TOKEN_KEY = "skp_token";
 const SKP_USER_CACHE_KEY = "skp_user_cache";
