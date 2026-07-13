@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap">
+    <title>Private Chat | Shubham Kumar</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+    <canvas id="matrixRain"></canvas>
+
+    <div id="pageTransition" class="page-transition"></div>
+
+    <div id="loader">
+        <div class="terminal-loader">
+            <h1 class="loader-title">SHUBHAM KUMAR</h1>
+            <p id="loading-text">Loading chat...</p>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
+    </div>
+
+    <header class="header">
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="index.html" class="nav-logo">SK</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="toolkit.html" class="nav-link">Toolkit</a></li>
+                <li class="nav-item"><a href="chat.html" class="nav-link">Chat</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+
+                <li class="nav-item">
+                    <button class="signin-button" id="signInBtn">Sign In</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    </header>
+
+    <main>
+
+        <!-- Shown while we don't yet know / don't have a signed-in user -->
+        <div class="dashboard-guard" id="dashboardGuard" style="display:none;">
+            <span class="signin-tag">Members only</span>
+            <h1 class="loader-title" style="font-size:1.8rem;margin:14px 0;">Sign in to use Private Chat</h1>
+            <p>Create a free account or sign in to message other members in real time.</p>
+            <button class="signin-submit" id="dashboardSignInBtn" style="max-width:260px;margin:0 auto;">
+                <span>Sign In / Create Account</span>
+            </button>
+        </div>
+
+        <!-- Shown once we have a confirmed signed-in user -->
+        <div class="chat-app" id="chatApp" style="display:none;">
+
+            <aside class="chat-sidebar">
+                <div class="chat-sidebar-head">
+                    <h3><i class="fa-solid fa-comments"></i> Messages</h3>
+                    <button type="button" class="chat-icon-btn" id="newChatBtn" title="New chat">
+                        <i class="fa-solid fa-square-pen"></i>
+                    </button>
+                </div>
+
+                <div class="chat-search-row">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="chatSearchInput" placeholder="Search messages...">
+                </div>
+
+                <div id="chatSearchResults" class="chat-search-results"></div>
+
+                <ul class="chat-conversation-list" id="conversationList"></ul>
+                <p class="message-empty" id="conversationsEmpty" style="display:none;">
+                    No conversations yet — tap <i class="fa-solid fa-square-pen"></i> to start one.
+                </p>
+            </aside>
+
+            <section class="chat-main" id="chatMain">
+                <div class="chat-main-empty" id="chatMainEmpty">
+                    <i class="fa-solid fa-comments"></i>
+                    <p>Select a conversation, or start a new one.</p>
+                </div>
+
+                <div class="chat-thread" id="chatThread" style="display:none;">
+                    <div class="chat-thread-header">
+                        <img src="assets/images/profile.png" class="chat-avatar" id="threadAvatar" alt="">
+                        <div class="chat-thread-who">
+                            <h4 id="threadName">&nbsp;</h4>
+                            <p id="threadStatus">&nbsp;</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-thread-messages" id="threadMessages">
+                        <button type="button" class="chat-load-more" id="loadMoreBtn" style="display:none;">
+                            Load earlier messages
+                        </button>
+                    </div>
+
+                    <div class="chat-typing-row" id="threadTypingRow" style="display:none;">
+                        <span></span><span></span><span></span> typing...
+                    </div>
+
+                    <form class="chat-compose" id="composeForm">
+                        <label class="chat-attach-btn" title="Send an image">
+                            <i class="fa-solid fa-image"></i>
+                            <input type="file" id="attachImageInput" accept=".jpg,.jpeg,.png" hidden>
+                        </label>
+                        <label class="chat-attach-btn" title="Send a document">
+                            <i class="fa-solid fa-paperclip"></i>
+                            <input type="file" id="attachDocInput" accept=".pdf,.doc,.docx,.txt,.zip" hidden>
+                        </label>
+                        <textarea id="composeInput" rows="1" placeholder="Type a message... (Markdown supported)" maxlength="4000"></textarea>
+                        <button type="submit" class="chat-send-btn" aria-label="Send">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <div class="chat-alert" id="chatAlert"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- New chat / user picker -->
+        <div class="chat-picker-overlay" id="chatPickerOverlay">
+            <div class="chat-picker-modal">
+                <div class="chat-picker-head">
+                    <h4>Start a new chat</h4>
+                    <button type="button" id="chatPickerClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <input type="text" id="chatPickerSearch" placeholder="Search people by name or email...">
+                <ul class="chat-picker-list" id="chatPickerList"></ul>
+            </div>
+        </div>
+
+    </main>
+
+<div class="signin-overlay" id="signInOverlay">
+        <div class="signin-modal">
+            <button class="signin-close" id="signInClose" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="signin-tag">Welcome</span>
+            <h2 class="signin-title">Sign In to Continue</h2>
+            <p class="signin-subtitle">Sign in to message other members in real time.</p>
+
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="tabSignIn" data-tab="signin">Sign In</button>
+                <button type="button" class="auth-tab" id="tabSignUp" data-tab="signup">Create Account</button>
+            </div>
+
+            <div class="auth-alert" id="authAlert"></div>
+
+            <form class="auth-form active" id="signInForm" data-mode="signin">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+                <a href="#" id="forgotPasswordLink" class="forgot-password-link">Forgot password?</a>
+                <button type="submit" class="signin-submit"><span>Sign In</span></button>
+            </form>
+
+            <form class="auth-form" id="signUpForm" data-mode="signup">
+                <input type="text" name="name" placeholder="Full name" required autocomplete="name">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Create password (min 6 chars)" required minlength="6" autocomplete="new-password">
+                <input type="password" name="confirm" placeholder="Confirm password" required minlength="6" autocomplete="new-password">
+                <button type="submit" class="signin-submit"><span>Create Account</span></button>
+            </form>
+
+            <p class="signin-note">Your account is securely stored on our server (MySQL + hashed password).</p>
+
+        </div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="assets/js/script.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/matrix.js"></script>
+<script src="assets/js/chat.js"></script>
+<script src="assets/js/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap">
+    <title>My Dashboard | Shubham Kumar</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+    <canvas id="matrixRain"></canvas>
+
+    <div id="pageTransition" class="page-transition"></div>
+
+    <div id="loader">
+        <div class="terminal-loader">
+            <h1 class="loader-title">SHUBHAM KUMAR</h1>
+            <p id="loading-text">Loading your dashboard...</p>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
+    </div>
+
+    <header class="header">
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="index.html" class="nav-logo">SK</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="skills.html" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="qualification.html" class="nav-link">Qualification</a></li>
+                <li class="nav-item"><a href="certificates.html" class="nav-link">Certificates</a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="toolkit.html" class="nav-link">Toolkit</a></li>
+                <li class="nav-item"><a href="chat.html" class="nav-link"><i class="fa-solid fa-comments"></i> Chat</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+
+                <li class="nav-item">
+                    <button class="signin-button" id="signInBtn">Sign In</button>
+                </li>
+
+                <li class="nav-item resume-item">
+                    <a href="assets/documents/resume.pdf" class="resume-button" download>Download Resume</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    </header>
+
+    <main>
+
+        <!-- Shown while we don't yet know / don't have a signed-in user -->
+        <div class="dashboard-guard" id="dashboardGuard" style="display:none;">
+            <span class="signin-tag">Members only</span>
+            <h1 class="loader-title" style="font-size:1.8rem;margin:14px 0;">Sign in to view your dashboard</h1>
+            <p>Create a free account or sign in to manage your profile, projects, uploads and support messages.</p>
+            <button class="signin-submit" id="dashboardSignInBtn" style="max-width:260px;margin:0 auto;">
+                <span>Sign In / Create Account</span>
+            </button>
+        </div>
+
+        <!-- Shown once we have a confirmed signed-in user -->
+        <div class="dashboard-shell" id="dashboardShell" style="display:none;">
+
+            <div class="dashboard-header">
+                <div class="account-avatar" id="dashAvatar" style="margin:0;">SK</div>
+                <div>
+                    <h1 id="dashName">Loading...</h1>
+                    <p class="account-meta" id="dashMeta" style="margin:0;text-align:left;">&nbsp;</p>
+                </div>
+            </div>
+
+            <div class="account-tabs" id="dashboardTabs">
+                <button type="button" class="account-tab active" data-dtab="overview"><i class="fa-solid fa-gauge-high"></i> Overview</button>
+                <button type="button" class="account-tab" data-dtab="profile"><i class="fa-solid fa-user"></i> Profile</button>
+                <button type="button" class="account-tab" data-dtab="skills"><i class="fa-solid fa-code"></i> Skills</button>
+                <button type="button" class="account-tab" data-dtab="background"><i class="fa-solid fa-graduation-cap"></i> Background</button>
+                <button type="button" class="account-tab" data-dtab="projects"><i class="fa-solid fa-diagram-project"></i> Projects</button>
+                <button type="button" class="account-tab" data-dtab="uploads"><i class="fa-solid fa-cloud-arrow-up"></i> Uploads</button>
+                <button type="button" class="account-tab" data-dtab="notifications"><i class="fa-solid fa-bell"></i> Notifications <span class="tab-badge" id="notifTabBadge" style="display:none;">0</span></button>
+                <button type="button" class="account-tab" data-dtab="activity"><i class="fa-solid fa-clock-rotate-left"></i> Activity</button>
+                <button type="button" class="account-tab" data-dtab="support"><i class="fa-solid fa-headset"></i> Support</button>
+                <button type="button" class="account-tab" data-dtab="settings"><i class="fa-solid fa-gear"></i> Settings</button>
+            </div>
+
+            <!-- ---------------- Overview / Dashboard Analytics ---------------- -->
+            <div class="account-panel active" id="overviewPanel">
+                <div class="glass-cover" id="overviewCover">
+                    <img id="overviewCoverImg" alt="" style="display:none;">
+                    <div class="glass-cover-overlay"></div>
+                    <div class="glass-cover-profile">
+                        <img id="overviewAvatarImg" class="glass-cover-avatar" alt="" style="display:none;">
+                        <div class="glass-cover-avatar glass-cover-avatar-fallback" id="overviewAvatarFallback">SK</div>
+                        <div>
+                            <h2 id="overviewName">&nbsp;</h2>
+                            <p id="overviewBio">&nbsp;</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-grid" id="statGrid">
+                    <div class="stat-card"><i class="fa-solid fa-diagram-project"></i><span class="stat-num" id="statProjects">0</span><span class="stat-label">Projects</span></div>
+                    <div class="stat-card"><i class="fa-solid fa-code"></i><span class="stat-num" id="statSkills">0</span><span class="stat-label">Skills</span></div>
+                    <div class="stat-card"><i class="fa-solid fa-comments"></i><span class="stat-num" id="statChats">0</span><span class="stat-label">Chat Conversations</span></div>
+                    <div class="stat-card"><i class="fa-solid fa-robot"></i><span class="stat-num" id="statAi">0</span><span class="stat-label">AI Conversations</span></div>
+                    <div class="stat-card"><i class="fa-solid fa-headset"></i><span class="stat-num" id="statSupport">0</span><span class="stat-label">Support Messages</span></div>
+                    <div class="stat-card"><i class="fa-solid fa-bell"></i><span class="stat-num" id="statUnread">0</span><span class="stat-label">Unread Notifications</span></div>
+                </div>
+
+                <div class="glass-panel" id="overviewCompleteness">
+                    <h4><i class="fa-solid fa-circle-check"></i> Profile Completeness</h4>
+                    <p id="overviewCompletenessText" class="account-hint">Checking...</p>
+                </div>
+            </div>
+
+            <!-- ---------------- Profile ---------------- -->
+            <div class="account-panel" id="profilePanel">
+                <div class="auth-alert" id="profileAlert"></div>
+                <form id="profileForm" class="auth-form active" style="display:flex;">
+                    <input type="text" name="name" id="profileNameInput" placeholder="Full name" required>
+                    <textarea name="bio" id="profileBioInput" rows="4" maxlength="1000"
+                        placeholder="Short bio (max 1000 characters)"
+                        style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#fff;font-family:var(--font-body);font-size:0.92rem;resize:vertical;"></textarea>
+                    <button type="submit" class="signin-submit"><span>Save Profile</span></button>
+                </form>
+            </div>
+
+            <!-- ---------------- Skills ---------------- -->
+            <div class="account-panel" id="skillsPanel">
+                <div class="auth-alert" id="skillsAlert"></div>
+
+                <form id="skillForm" class="complaint-form skill-form">
+                    <input type="text" name="name" id="skillNameInput" placeholder="Skill (e.g. Python, Nmap, React)" maxlength="80" required>
+                    <label class="skill-level-label">Level
+                        <input type="range" name="level" id="skillLevelInput" min="1" max="5" value="3">
+                        <span id="skillLevelValue">3</span>/5
+                    </label>
+                    <button type="submit" class="signin-submit" style="max-width:180px;"><span>Add Skill</span></button>
+                </form>
+
+                <div class="skill-chip-grid" id="skillGrid"></div>
+                <p class="message-empty" id="skillsEmpty" style="display:none;">No skills added yet.</p>
+            </div>
+
+            <!-- ---------------- Background: Education + Experience ---------------- -->
+            <div class="account-panel" id="backgroundPanel">
+                <div class="auth-alert" id="backgroundAlert"></div>
+
+                <h4 class="glass-subheading"><i class="fa-solid fa-graduation-cap"></i> Education</h4>
+                <button type="button" class="signin-submit" id="addEducationToggle" style="max-width:220px;margin-bottom:16px;"><span><i class="fa-solid fa-plus"></i> Add Education</span></button>
+                <form id="educationForm" class="complaint-form" style="display:none;margin-bottom:20px;">
+                    <input type="hidden" name="education_id" id="educationIdField">
+                    <input type="text" name="school" placeholder="School / University" required maxlength="150">
+                    <input type="text" name="degree" placeholder="Degree (e.g. B.Tech)" maxlength="150">
+                    <input type="text" name="field" placeholder="Field of study" maxlength="150">
+                    <div class="two-col-row">
+                        <input type="number" name="start_year" placeholder="Start year" min="1950" max="2100">
+                        <input type="number" name="end_year" placeholder="End year (blank if ongoing)" min="1950" max="2100">
+                    </div>
+                    <textarea name="description" rows="2" placeholder="Notes (optional)" maxlength="1000"></textarea>
+                    <button type="submit" class="signin-submit" style="max-width:180px;"><span id="educationSubmitLabel">Save</span></button>
+                </form>
+                <div class="timeline-list" id="educationList"></div>
+                <p class="message-empty" id="educationEmpty" style="display:none;">No education added yet.</p>
+
+                <h4 class="glass-subheading" style="margin-top:30px;"><i class="fa-solid fa-briefcase"></i> Experience</h4>
+                <button type="button" class="signin-submit" id="addExperienceToggle" style="max-width:220px;margin-bottom:16px;"><span><i class="fa-solid fa-plus"></i> Add Experience</span></button>
+                <form id="experienceForm" class="complaint-form" style="display:none;margin-bottom:20px;">
+                    <input type="hidden" name="experience_id" id="experienceIdField">
+                    <input type="text" name="company" placeholder="Company" required maxlength="150">
+                    <input type="text" name="role" placeholder="Role / Title" required maxlength="150">
+                    <div class="two-col-row">
+                        <input type="date" name="start_date" placeholder="Start date">
+                        <input type="date" name="end_date" id="experienceEndDate" placeholder="End date">
+                    </div>
+                    <label class="checkbox-row"><input type="checkbox" name="is_current" id="experienceCurrentCheckbox"> I currently work here</label>
+                    <textarea name="description" rows="2" placeholder="What did you do? (optional)" maxlength="1000"></textarea>
+                    <button type="submit" class="signin-submit" style="max-width:180px;"><span id="experienceSubmitLabel">Save</span></button>
+                </form>
+                <div class="timeline-list" id="experienceList"></div>
+                <p class="message-empty" id="experienceEmpty" style="display:none;">No experience added yet.</p>
+            </div>
+
+            <!-- ---------------- Projects ---------------- -->
+            <div class="account-panel" id="projectsPanel">
+                <div class="auth-alert" id="projectsAlert"></div>
+
+                <button type="button" class="signin-submit" id="addProjectToggle" style="max-width:220px;margin-bottom:20px;">
+                    <span><i class="fa-solid fa-plus"></i> Add Project</span>
+                </button>
+
+                <form id="projectForm" class="complaint-form" style="display:none;">
+                    <input type="hidden" name="project_id" id="projectIdField">
+                    <input type="text" name="title" placeholder="Project title" required maxlength="150">
+                    <textarea name="description" rows="3" placeholder="Short description" maxlength="2000"></textarea>
+                    <input type="url" name="github" placeholder="GitHub link (https://...)" maxlength="255">
+                    <input type="url" name="demo" placeholder="Live demo link (https://...)" maxlength="255">
+                    <label class="upload-field">
+                        <input type="file" name="image" id="projectImageInput" accept=".jpg,.jpeg,.png">
+                        <span><i class="fa-solid fa-image"></i> Project image (optional, jpg/png)</span>
+                    </label>
+                    <button type="submit" class="signin-submit"><span id="projectSubmitLabel">Save Project</span></button>
+                </form>
+
+                <div class="project-grid" id="projectGrid"></div>
+                <p class="message-empty" id="projectsEmpty" style="display:none;">No projects added yet.</p>
+            </div>
+
+            <!-- ---------------- Uploads ---------------- -->
+            <div class="account-panel" id="uploadsPanel">
+                <div class="auth-alert" id="uploadsAlert"></div>
+
+                <div class="upload-grid">
+                    <div class="upload-card">
+                        <i class="fa-solid fa-image"></i>
+                        <h4>Profile Photo</h4>
+                        <p id="photoStatus" class="account-meta">No photo uploaded</p>
+                        <label class="signin-submit upload-btn">
+                            <span>Choose Photo</span>
+                            <input type="file" id="photoInput" accept=".jpg,.jpeg,.png" hidden>
+                        </label>
+                    </div>
+
+                    <div class="upload-card">
+                        <i class="fa-solid fa-panorama"></i>
+                        <h4>Cover Picture</h4>
+                        <p id="coverStatus" class="account-meta">No cover uploaded</p>
+                        <label class="signin-submit upload-btn">
+                            <span>Choose Cover</span>
+                            <input type="file" id="coverInput" accept=".jpg,.jpeg,.png" hidden>
+                        </label>
+                    </div>
+
+                    <div class="upload-card">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <h4>Resume (PDF)</h4>
+                        <p id="resumeStatus" class="account-meta">No resume uploaded</p>
+                        <label class="signin-submit upload-btn">
+                            <span>Choose PDF</span>
+                            <input type="file" id="resumeInput" accept=".pdf" hidden>
+                        </label>
+                    </div>
+
+                    <div class="upload-card">
+                        <i class="fa-solid fa-certificate"></i>
+                        <h4>Certificate</h4>
+                        <p id="certificateStatus" class="account-meta">No certificate uploaded</p>
+                        <label class="signin-submit upload-btn">
+                            <span>Choose File</span>
+                            <input type="file" id="certificateInput" accept=".jpg,.jpeg,.png,.pdf" hidden>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ---------------- Notifications ---------------- -->
+            <div class="account-panel" id="notificationsPanel">
+                <div class="auth-alert" id="notificationsAlert"></div>
+                <button type="button" class="signin-submit" id="markAllReadBtn" style="max-width:200px;margin-bottom:16px;"><span>Mark all as read</span></button>
+                <ul class="notification-list" id="notificationList"></ul>
+                <p class="message-empty" id="notificationsEmpty" style="display:none;">No notifications yet.</p>
+            </div>
+
+            <!-- ---------------- Activity Timeline ---------------- -->
+            <div class="account-panel" id="activityPanel">
+                <ul class="timeline-list activity-timeline" id="activityList"></ul>
+                <p class="message-empty" id="activityEmpty" style="display:none;">No activity recorded yet.</p>
+            </div>
+
+            <!-- ---------------- Support ---------------- -->
+            <div class="account-panel" id="supportPanel">
+                <p class="account-hint">Facing an issue, found a bug, or have feedback? Send it directly to Shubham &mdash; it also stays saved here for your reference.</p>
+
+                <div class="auth-alert" id="supportAlert"></div>
+
+                <form id="complaintForm" class="complaint-form">
+                    <select name="category" id="complaintCategory" required>
+                        <option value="" disabled selected>Select category</option>
+                        <option value="Bug Report">Bug Report</option>
+                        <option value="Complaint">Complaint</option>
+                        <option value="Feedback">Feedback</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="text" name="subject" placeholder="Subject" required maxlength="200">
+                    <textarea name="message" rows="4" placeholder="Describe the issue..." required minlength="10" maxlength="3000"></textarea>
+                    <button type="submit" class="signin-submit"><span>Send Message</span></button>
+                </form>
+
+                <div class="message-history">
+                    <h4>Your Messages</h4>
+                    <ul id="messageList" class="message-list">
+                        <li class="message-empty">No messages sent yet.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ---------------- Settings ---------------- -->
+            <div class="account-panel" id="settingsPanel">
+                <div class="auth-alert" id="settingsAlert"></div>
+
+                <h4 class="glass-subheading"><i class="fa-solid fa-palette"></i> Theme</h4>
+                <div class="toggle-row-group" id="themeToggleGroup" style="margin-bottom:28px;">
+                    <button type="button" class="toggle-pill" data-theme="dark"><i class="fa-solid fa-moon"></i> Dark</button>
+                    <button type="button" class="toggle-pill" data-theme="light"><i class="fa-solid fa-sun"></i> Light</button>
+                </div>
+
+                <h4 class="glass-subheading"><i class="fa-solid fa-user-lock"></i> Privacy</h4>
+                <p class="account-hint">Control whether other visitors can see that your profile exists.</p>
+                <div class="toggle-row-group" id="privacyToggleGroup" style="margin-bottom:28px;">
+                    <button type="button" class="toggle-pill" data-visibility="public"><i class="fa-solid fa-globe"></i> Public</button>
+                    <button type="button" class="toggle-pill" data-visibility="private"><i class="fa-solid fa-lock"></i> Private</button>
+                </div>
+
+                <h4 class="glass-subheading"><i class="fa-solid fa-bell"></i> Notification Preferences</h4>
+                <div class="setting-switch-list" style="margin-bottom:28px;">
+                    <label class="setting-switch"><input type="checkbox" id="notifyEmailToggle"> <span>Email me about account activity</span></label>
+                    <label class="setting-switch"><input type="checkbox" id="notifyChatToggle"> <span>Notify me about new chat messages</span></label>
+                </div>
+
+                <h4 class="glass-subheading"><i class="fa-solid fa-shield-halved"></i> Security</h4>
+                <form id="passwordForm" class="complaint-form" style="margin-bottom:36px;">
+                    <input type="password" name="current_password" placeholder="Current password" required autocomplete="current-password">
+                    <input type="password" name="new_password" placeholder="New password (min 6 chars)" required minlength="6" autocomplete="new-password">
+                    <input type="password" name="confirm" placeholder="Confirm new password" required minlength="6" autocomplete="new-password">
+                    <button type="submit" class="signin-submit" style="max-width:220px;"><span>Update Password</span></button>
+                </form>
+
+                <h4 style="margin-bottom:14px;color:#fca5a5;">Danger Zone</h4>
+                <div class="auth-alert" id="deleteAlert"></div>
+                <form id="deleteForm" class="complaint-form">
+                    <p class="account-hint" style="margin-bottom:8px;">Deleting your account permanently removes your profile, projects and uploads. This cannot be undone.</p>
+                    <input type="password" name="password" placeholder="Enter your password to confirm" required autocomplete="current-password">
+                    <button type="submit" class="signin-submit account-logout" style="max-width:220px;"><span>Delete My Account</span></button>
+                </form>
+            </div>
+
+        </div>
+
+    </main>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/matrix.js"></script>
+<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/chatbot.js"></script>
+
+<div class="signin-overlay" id="signInOverlay">
+        <div class="signin-modal">
+            <button class="signin-close" id="signInClose" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="signin-tag">Welcome</span>
+            <h2 class="signin-title">Sign In to Continue</h2>
+            <p class="signin-subtitle">Access exclusive updates from Shubham Kumar's portfolio.</p>
+
+            <div class="signin-options">
+
+                <button class="signin-option google">
+                    <i class="fa-brands fa-google"></i>
+                    Continue with Google
+                </button>
+
+                <button class="signin-option facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                    Continue with Facebook
+                </button>
+
+            </div>
+
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="tabSignIn" data-tab="signin">Sign In</button>
+                <button type="button" class="auth-tab" id="tabSignUp" data-tab="signup">Create Account</button>
+            </div>
+
+            <div class="auth-alert" id="authAlert"></div>
+
+            <form class="auth-form active" id="signInForm" data-mode="signin">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+                <a href="#" id="forgotPasswordLink" class="forgot-password-link">Forgot password?</a>
+                <button type="submit" class="signin-submit"><span>Sign In</span></button>
+            </form>
+
+            <form class="auth-form" id="signUpForm" data-mode="signup">
+                <input type="text" name="name" placeholder="Full name" required autocomplete="name">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Create password (min 6 chars)" required minlength="6" autocomplete="new-password">
+                <input type="password" name="confirm" placeholder="Confirm password" required minlength="6" autocomplete="new-password">
+                <button type="submit" class="signin-submit"><span>Create Account</span></button>
+            </form>
+
+            <p class="signin-note">Your account is securely stored on our server (MySQL + hashed password).</p>
+
+        </div>
+    </div>
+
+    </body>
+</html>

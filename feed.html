@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap">
+    <title>News Feed | Shubham Kumar</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/style.css">
+   <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<meta name="google-client-id"
+      content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+    <canvas id="matrixRain"></canvas>
+
+    <div id="pageTransition" class="page-transition"></div>
+
+    <div id="loader">
+        <div class="terminal-loader">
+            <h1 class="loader-title">SHUBHAM KUMAR</h1>
+            <p id="loading-text">Loading your dashboard...</p>
+            <div class="progress-bar"><div class="progress"></div></div>
+        </div>
+    </div>
+
+    <header class="header">
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="index.html" class="nav-logo">SK</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="skills.html" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="qualification.html" class="nav-link">Qualification</a></li>
+                <li class="nav-item"><a href="certificates.html" class="nav-link">Certificates</a></li>
+                <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="toolkit.html" class="nav-link">Toolkit</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="feed.html" class="nav-link">Feed</a></li>
+
+                <li class="nav-item">
+                    <button class="signin-button" id="signInBtn">Sign In</button>
+                </li>
+
+                <li class="nav-item resume-item">
+                    <a href="assets/documents/resume.pdf" class="resume-button" download>Download Resume</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    </header>
+
+    <main>
+
+        <!-- Shown while we don't yet know / don't have a signed-in user -->
+        <div class="dashboard-guard" id="dashboardGuard" style="display:none;">
+            <span class="signin-tag">Members only</span>
+            <h1 class="loader-title" style="font-size:1.8rem;margin:14px 0;">Sign in to view your feed</h1>
+            <p>Create a free account or sign in to follow people, connect, and post updates.</p>
+            <button class="signin-submit" id="dashboardSignInBtn" style="max-width:260px;margin:0 auto;">
+                <span>Sign In / Create Account</span>
+            </button>
+        </div>
+
+        <!-- Shown once we have a confirmed signed-in user -->
+        <div class="dashboard-shell" id="feedShell" style="display:none;">
+<div class="feed-layout">
+
+    <!-- Left Sidebar -->
+
+    <aside class="feed-sidebar">
+
+        <div class="feed-logo">
+            <h2>SK Social</h2>
+        </div>
+
+        <ul>
+
+            <li class="active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </li>
+
+            <li>
+                <i class="fa-solid fa-compass"></i>
+                <span>Explore</span>
+            </li>
+
+            <li>
+                <i class="fa-solid fa-user-group"></i>
+                <span>Friends</span>
+            </li>
+
+            <li>
+                <i class="fa-solid fa-heart"></i>
+                <span>Notifications</span>
+            </li>
+
+            <li>
+                <i class="fa-solid fa-message"></i>
+                <span>Messages</span>
+            </li>
+
+            <li>
+                <i class="fa-solid fa-bookmark"></i>
+                <span>Bookmarks</span>
+            </li>
+
+            <li>
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <div class="feed-center">
+            <div class="dashboard-header">
+                <div class="account-avatar" id="feedAvatar" style="margin:0;">SK</div>
+                <div>
+                    <h1 id="feedGreeting">Your Feed</h1>
+                    <p class="account-meta" id="feedMeta" style="margin:0;text-align:left;">&nbsp;</p>
+                </div>
+                <!-- Right Sidebar -->
+
+<aside class="feed-right">
+
+    <div class="profile-card">
+
+        <div class="profile-top">
+
+            <div class="profile-photo" id="rightProfileAvatar">
+                SK
+            </div>
+
+            <div>
+
+                <h3 id="rightProfileName">
+                    Shubham Kumar
+                </h3>
+
+                <small id="rightProfileUsername">
+                    @shubham
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="suggestion-box">
+
+        <h3>Suggested For You</h3>
+
+        <div class="suggestion">
+
+            <img src="assets/img/profile.jpg">
+
+            <div>
+
+                <b>Alex Carter</b>
+
+                <small>Cyber Researcher</small>
+
+            </div>
+
+            <button>Follow</button>
+
+        </div>
+
+        <div class="suggestion">
+
+            <img src="assets/img/profile.jpg">
+
+            <div>
+
+                <b>Emma</b>
+
+                <small>Developer</small>
+
+            </div>
+
+            <button>Follow</button>
+
+        </div>
+
+        <div class="suggestion">
+
+            <img src="assets/img/profile.jpg">
+
+            <div>
+
+                <b>Rahul</b>
+
+                <small>Ethical Hacker</small>
+
+            </div>
+
+            <button>Follow</button>
+
+        </div>
+
+    </div>
+
+    <div class="trending-box">
+
+        <h3>Trending</h3>
+
+        <p>#CyberSecurity</p>
+
+        <p>#Python</p>
+
+        <p>#AI</p>
+
+        <p>#BugBounty</p>
+
+        <p>#EthicalHacking</p>
+
+    </div>
+
+</aside>
+            </div>
+            <div class="stories-wrapper">
+
+<div class="story-item">
+<img src="assets/img/profile.jpg">
+<p>Your Story</p>
+</div>
+
+<div class="story-item">
+<img src="assets/img/profile.jpg">
+<p>Alex</p>
+</div>
+
+<div class="story-item">
+<img src="assets/img/profile.jpg">
+<p>Emma</p>
+</div>
+
+<div class="story-item">
+<img src="assets/img/profile.jpg">
+<p>Rahul</p>
+</div>
+
+<div class="story-item">
+<img src="assets/img/profile.jpg">
+<p>Priya</p>
+</div>
+
+</div>
+<!-- Instagram Stories -->
+<div class="stories-bar">
+
+    <div class="story">
+        <img src="assets/img/profile.jpg" alt="">
+        <span>Your Story</span>
+    </div>
+
+    <div class="story">
+        <img src="assets/img/profile.jpg" alt="">
+        <span>Rahul</span>
+    </div>
+
+    <div class="story">
+        <img src="assets/img/profile.jpg" alt="">
+        <span>Aman</span>
+    </div>
+
+    <div class="story">
+        <img src="assets/img/profile.jpg" alt="">
+        <span>Priya</span>
+    </div>
+
+    <div class="story">
+        <img src="assets/img/profile.jpg" alt="">
+        <span>Riya</span>
+    </div>
+
+</div>
+            <div class="account-tabs" id="feedTabs">
+                <button type="button" class="account-tab active" data-ftab="feed"><i class="fa-solid fa-house"></i> Feed</button>
+                <button type="button" class="account-tab" data-ftab="explore"><i class="fa-solid fa-compass"></i> Explore</button>
+                <button type="button" class="account-tab" data-ftab="search"><i class="fa-solid fa-magnifying-glass"></i> Find People</button>
+                <button type="button" class="account-tab" data-ftab="requests"><i class="fa-solid fa-user-plus"></i> Requests</button>
+                <button type="button" class="account-tab" data-ftab="bookmarks"><i class="fa-solid fa-bookmark"></i> Bookmarks</button>
+            </div>
+
+            <!-- ---------------- Feed ---------------- -->
+            <div class="account-panel active" id="feedPanel">
+                <div class="auth-alert" id="composerAlert"></div>
+
+                <form id="composerForm" class="complaint-form" style="margin-bottom:28px;">
+                    <textarea name="content" id="composerContent" rows="3" maxlength="5000"
+                        placeholder="Share something..."
+                        style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#fff;font-family:var(--font-body);font-size:0.92rem;resize:vertical;"></textarea>
+
+                    <div class="upload-grid" style="grid-template-columns:1fr 1fr;gap:12px;">
+                        <label class="upload-field">
+                            <input type="file" id="composerImageInput" accept=".jpg,.jpeg,.png">
+                            <span><i class="fa-solid fa-image"></i> Add photo (optional)</span>
+                        </label>
+                        <label class="upload-field">
+                            <input type="file" id="composerVideoInput" accept=".mp4,.webm,.mov">
+                            <span><i class="fa-solid fa-video"></i> Add video (optional)</span>
+                        </label>
+                    </div>
+                    <p class="account-meta" id="composerMediaStatus" style="text-align:left;"></p>
+
+                    <select name="visibility" id="composerVisibility" required>
+                        <option value="public">Public — anyone can see this</option>
+                        <option value="connections_only">Connections only</option>
+                        <option value="private">Private — only me</option>
+                    </select>
+
+                    <button type="submit" class="signin-submit" style="max-width:180px;"><span>Post</span></button>
+                </form>
+                <div class="instagram-feed">
+
+</div>
+                <div class="project-grid" id="feedList" style="grid-template-columns:1fr;"></div>
+                <p class="message-empty" id="feedEmpty" style="display:none;">Nothing here yet — follow or connect with people to see their posts.</p>
+            </div>
+
+            <!-- ---------------- Explore ---------------- -->
+            <div class="account-panel" id="explorePanel">
+                <p class="account-hint">Public posts from everyone on the platform.</p>
+                <div class="project-grid" id="exploreList" style="grid-template-columns:1fr;"></div>
+                <p class="message-empty" id="exploreEmpty" style="display:none;">No public posts yet.</p>
+            </div>
+
+            <!-- ---------------- Find People ---------------- -->
+            <div class="account-panel" id="searchPanel">
+                <form id="searchForm" class="complaint-form" style="flex-direction:row;gap:10px;">
+                    <input type="text" name="q" id="searchInput" placeholder="Search by name or username" minlength="2" required style="flex:1;">
+                    <button type="submit" class="signin-submit" style="max-width:140px;"><span>Search</span></button>
+                </form>
+                <div class="project-grid" id="searchResults" style="grid-template-columns:1fr;margin-top:20px;"></div>
+            </div>
+
+            <!-- ---------------- Connection Requests ---------------- -->
+            <div class="account-panel" id="requestsPanel">
+                <p class="account-hint">People who've asked to connect with you.</p>
+                <div class="project-grid" id="requestsList" style="grid-template-columns:1fr;"></div>
+                <p class="message-empty" id="requestsEmpty" style="display:none;">No pending requests.</p>
+            </div>
+
+            <!-- ---------------- Bookmarks ---------------- -->
+            <div class="account-panel" id="bookmarksPanel">
+                <div class="project-grid" id="bookmarksList" style="grid-template-columns:1fr;"></div>
+                <p class="message-empty" id="bookmarksEmpty" style="display:none;">No bookmarks yet.</p>
+            </div>
+
+        </div>
+
+    </main>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/matrix.js"></script>
+<script src="assets/js/feed.js"></script>
+<script src="assets/js/chatbot.js"></script>
+
+<div class="signin-overlay" id="signInOverlay">
+        <div class="signin-modal">
+            <button class="signin-close" id="signInClose" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="signin-tag">Welcome</span>
+            <h2 class="signin-title">Sign In to Continue</h2>
+            <p class="signin-subtitle">Access exclusive updates from Shubham Kumar's portfolio.</p>
+
+            <div class="signin-options">
+
+                <button class="signin-option google" id="googleSignInBtn" type="button">
+                    <i class="fa-brands fa-google"></i>
+                    Continue with Google
+                </button>
+
+                <button class="signin-option facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                    Continue with Facebook
+                </button>
+
+            </div>
+
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="tabSignIn" data-tab="signin">Sign In</button>
+                <button type="button" class="auth-tab" id="tabSignUp" data-tab="signup">Create Account</button>
+            </div>
+
+            <div class="auth-alert" id="authAlert"></div>
+
+            <form class="auth-form active" id="signInForm" data-mode="signin">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+                <a href="#" id="forgotPasswordLink" class="forgot-password-link">Forgot password?</a>
+                <button type="submit" class="signin-submit"><span>Sign In</span></button>
+            </form>
+
+            <form class="auth-form" id="signUpForm" data-mode="signup">
+                <input type="text" name="name" placeholder="Full name" required autocomplete="name">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Create password (min 6 chars)" required minlength="6" autocomplete="new-password">
+                <input type="password" name="confirm" placeholder="Confirm password" required minlength="6" autocomplete="new-password">
+                <button type="submit" class="signin-submit"><span>Create Account</span></button>
+            </form>
+
+            <p class="signin-note">Your account is securely stored on our server (MySQL + hashed password).</p>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="mobile-bottom-nav">
+
+    <i class="fa-solid fa-house"></i>
+
+    <i class="fa-solid fa-magnifying-glass"></i>
+
+    <i class="fa-solid fa-plus"></i>
+
+    <i class="fa-solid fa-message"></i>
+
+    <i class="fa-solid fa-user"></i>
+
+</div>
+    </body>
+</html>

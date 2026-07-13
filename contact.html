@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap">
     <title>Contact | Shubham Kumar</title>
      <link rel="stylesheet" href="assets/css/style.css">
       <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta name="description" content="Get in touch with Shubham Kumar.">
+    <link rel="canonical" href="https://shubham124-pari.github.io/contact.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact | Shubham Kumar">
+    <meta property="og:description" content="Get in touch with Shubham Kumar.">
+    <meta property="og:url" content="https://shubham124-pari.github.io/contact.html">
+    <meta property="og:image" content="https://shubham124-pari.github.io/assets/images/profile.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="google-client-id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="twitter:title" content="Contact | Shubham Kumar">
+    <meta name="twitter:description" content="Get in touch with Shubham Kumar.">
 </head>
 <body>
+
+    <canvas id="matrixRain"></canvas>
+
 
     <div id="pageTransition" class="page-transition"></div>
 
@@ -55,6 +74,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
                 <li class="nav-item">
                     <a href="services.html" class="nav-link">Services</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="toolkit.html" class="nav-link">Toolkit</a>
                 </li>
 
                 <li class="nav-item">
@@ -159,12 +182,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <div class="contact-form">
 
+<div class="auth-alert" id="contactFormAlert"></div>
 
-<form action="https://api.web3forms.com/submit" method="POST">
+<form id="contactForm">
 
-<input type="hidden" name="access_key" value="YAHAN_APNI_ACCESS_KEY_DAALO">
-
-<input type="text" 
+<input type="text"
 name="name"
 placeholder="Your Name"
 required>
@@ -178,11 +200,12 @@ required>
 name="subject"
 placeholder="Subject">
 
-<textarea 
+<textarea
 name="message"
 rows="6"
 placeholder="Your Message"
-required></textarea>
+required
+minlength="10"></textarea>
 
 <button type="submit">
     Send Message
@@ -210,7 +233,57 @@ required></textarea>
 
 <script src="assets/js/script.js"></script>
 
-    <div class="signin-overlay" id="signInOverlay">
+    
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/matrix.js"></script>
+<script src="assets/js/chatbot.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contactForm");
+    const alertEl = document.getElementById("contactFormAlert");
+    if (!form) return;
+
+    function showAlert(type, text) {
+        alertEl.textContent = text;
+        alertEl.className = "auth-alert show " + type;
+        if (type === "success") {
+            setTimeout(() => { alertEl.className = "auth-alert"; }, 5000);
+        }
+    }
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        const original = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = "Sending...";
+
+        try {
+            const data = new FormData(form);
+            const body = {
+                name: (data.get("name") || "").trim(),
+                email: (data.get("email") || "").trim(),
+                subject: (data.get("subject") || "").trim(),
+                message: (data.get("message") || "").trim(),
+            };
+
+            // skpApiRequest (from auth.js) automatically attaches the
+            // signed-in user's token if present, so a logged-in visitor's
+            // message also shows up in their dashboard's "My Messages".
+            await skpApiRequest("/contact", { method: "POST", body });
+
+            showAlert("success", "Your message has been sent. Thank you — Shubham will get back to you soon!");
+            form.reset();
+        } catch (err) {
+            showAlert("error", err.message);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = original;
+        }
+    });
+});
+</script>
+<div class="signin-overlay" id="signInOverlay">
         <div class="signin-modal">
             <button class="signin-close" id="signInClose" aria-label="Close">
                 <i class="fa-solid fa-xmark"></i>
@@ -222,7 +295,7 @@ required></textarea>
 
             <div class="signin-options">
 
-                <button class="signin-option google">
+                <button class="signin-option google" id="googleSignInBtn" type="button">
                     <i class="fa-brands fa-google"></i>
                     Continue with Google
                 </button>
@@ -232,22 +305,34 @@ required></textarea>
                     Continue with Facebook
                 </button>
 
-                <button class="signin-option email" id="signInEmailToggle">
-                    <i class="fa-solid fa-envelope"></i>
-                    Continue with Email
-                </button>
-
             </div>
 
-            <form class="signin-email-form" id="signInEmailForm">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit" class="signin-submit">Continue</button>
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="tabSignIn" data-tab="signin">Sign In</button>
+                <button type="button" class="auth-tab" id="tabSignUp" data-tab="signup">Create Account</button>
+            </div>
+
+            <div class="auth-alert" id="authAlert"></div>
+
+            <form class="auth-form active" id="signInForm" data-mode="signin">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+                <a href="#" id="forgotPasswordLink" class="forgot-password-link">Forgot password?</a>
+                <button type="submit" class="signin-submit"><span>Sign In</span></button>
             </form>
 
-            <p class="signin-note">Secure sign-in preview UI &mdash; connect Firebase or your backend to activate real authentication.</p>
+            <form class="auth-form" id="signUpForm" data-mode="signup">
+                <input type="text" name="name" placeholder="Full name" required autocomplete="name">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Create password (min 6 chars)" required minlength="6" autocomplete="new-password">
+                <input type="password" name="confirm" placeholder="Confirm password" required minlength="6" autocomplete="new-password">
+                <button type="submit" class="signin-submit"><span>Create Account</span></button>
+            </form>
+
+            <p class="signin-note">Your account is securely stored on our server (MySQL + hashed password).</p>
 
         </div>
     </div>
 
-</body>
+    </body>
 </html>

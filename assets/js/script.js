@@ -245,20 +245,32 @@ const messageInterval = setInterval(() => {
     }
 
 },700);
+window.addEventListener("load", () => {
 
-window.addEventListener("load",()=>{
+    const loader = document.getElementById("loader");
 
-    setTimeout(()=>{
+    // Sirf pehli baar browser session me loader dikhao
+    if (sessionStorage.getItem("loaderShown")) {
+
+        if (loader) {
+            loader.classList.add("hidden");
+        }
+
+        clearInterval(messageInterval);
+        return;
+    }
+
+    sessionStorage.setItem("loaderShown", "true");
+
+    setTimeout(() => {
 
         clearInterval(messageInterval);
 
-       const loader = document.getElementById("loader");
+        if (loader) {
+            loader.classList.add("hidden");
+        }
 
-if (loader) {
-    loader.classList.add("hidden");
-}
-
-    },3000);
+    }, 3000);
 
 });
 

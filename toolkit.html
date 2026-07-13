@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap">
+    <title>Cybersecurity Toolkit | Shubham Kumar</title>
+     <link rel="stylesheet" href="assets/css/style.css">
+      <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta name="description" content="Free, client-side cybersecurity tools: password generator, hash generator, and password strength checker. Nothing you type ever leaves your browser.">
+    <link rel="canonical" href="https://shubham124-pari.github.io/toolkit.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Cybersecurity Toolkit | Shubham Kumar">
+    <meta property="og:description" content="Free, client-side cybersecurity tools: password generator, hash generator, and password strength checker. Nothing you type ever leaves your browser.">
+    <meta property="og:url" content="https://shubham124-pari.github.io/toolkit.html">
+    <meta property="og:image" content="https://shubham124-pari.github.io/assets/images/profile.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="google-client-id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="twitter:title" content="Cybersecurity Toolkit | Shubham Kumar">
+    <meta name="twitter:description" content="Free, client-side cybersecurity tools: password generator, hash generator, and password strength checker. Nothing you type ever leaves your browser.">
+</head>
+<body>
+
+    <canvas id="matrixRain"></canvas>
+
+
+    <div id="pageTransition" class="page-transition"></div>
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <a href="index.html" class="nav-logo">
+                SK
+            </a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="skills.html" class="nav-link">Skills</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="projects.html" class="nav-link">Projects</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="qualification.html" class="nav-link">Qualification</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="certificates.html" class="nav-link">Certificates</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="services.html" class="nav-link">Services</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="toolkit.html" class="nav-link">Toolkit</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+
+                <li class="nav-item">
+                    <button class="signin-button" id="signInBtn">Sign In</button>
+                </li>
+
+                <li class="nav-item resume-item">
+                    <a href="assets/documents/resume.pdf" class="resume-button" download>Download Resume</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+<section class="toolkit">
+
+<div class="toolkit-container">
+
+
+<span class="section-tag">
+    Cybersecurity Toolkit
+</span>
+
+
+<h1 class="section-title">
+    Security Tools
+</h1>
+
+<p class="toolkit-subtitle">
+    Practical, client-side security tools. Nothing you type here ever
+    leaves your browser or touches a server.
+</p>
+
+
+
+<div class="toolkit-grid">
+
+
+
+<div class="tool-card" id="passwordGeneratorCard">
+
+<div class="tool-card-header">
+    <i class="fa-solid fa-key"></i>
+    <h3>Password Generator</h3>
+</div>
+
+<p class="tool-card-desc">
+    Generate a strong, random password using your browser's
+    cryptographically secure random number generator.
+</p>
+
+<div class="tool-output-row">
+    <input type="text" id="pwgOutput" class="tool-output" readonly value="Click Generate to start">
+    <button type="button" id="pwgCopyBtn" class="tool-icon-btn" title="Copy to clipboard">
+        <i class="fa-solid fa-copy"></i>
+    </button>
+</div>
+
+<div class="tool-strength-row">
+    <div class="tool-strength-bar">
+        <div id="pwgStrengthFill" class="tool-strength-fill"></div>
+    </div>
+    <span id="pwgStrengthLabel" class="tool-strength-label">—</span>
+</div>
+
+<div class="tool-field-row">
+    <label for="pwgLength">Length: <span id="pwgLengthValue">16</span></label>
+    <input type="range" id="pwgLength" min="8" max="64" value="16">
+</div>
+
+<div class="tool-checkbox-grid">
+
+    <label class="tool-checkbox">
+        <input type="checkbox" id="pwgUpper" checked>
+        Uppercase (A-Z)
+    </label>
+
+    <label class="tool-checkbox">
+        <input type="checkbox" id="pwgLower" checked>
+        Lowercase (a-z)
+    </label>
+
+    <label class="tool-checkbox">
+        <input type="checkbox" id="pwgNumbers" checked>
+        Numbers (0-9)
+    </label>
+
+    <label class="tool-checkbox">
+        <input type="checkbox" id="pwgSymbols" checked>
+        Symbols (!@#$%)
+    </label>
+
+</div>
+
+<button type="button" id="pwgGenerateBtn" class="tool-action-btn">
+    <i class="fa-solid fa-arrows-rotate"></i>
+    Generate Password
+</button>
+
+</div>
+
+
+
+<div class="tool-card" id="hashGeneratorCard">
+
+<div class="tool-card-header">
+    <i class="fa-solid fa-fingerprint"></i>
+    <h3>Hash Generator</h3>
+</div>
+
+<p class="tool-card-desc">
+    Generate a cryptographic hash of any text using your browser's
+    built-in Web Crypto API. Nothing you type here is sent anywhere.
+</p>
+
+<div class="tool-field-row">
+    <label for="hgInput">Text to hash</label>
+    <textarea id="hgInput" class="tool-output" rows="3" placeholder="Type or paste text here..."></textarea>
+</div>
+
+<div class="tool-field-row">
+    <label for="hgAlgo">Algorithm</label>
+    <select id="hgAlgo" class="tool-output">
+        <option value="SHA-256" selected>SHA-256</option>
+        <option value="SHA-1">SHA-1 (legacy — avoid for security use)</option>
+        <option value="SHA-384">SHA-384</option>
+        <option value="SHA-512">SHA-512</option>
+    </select>
+</div>
+
+<div class="tool-output-row">
+    <input type="text" id="hgOutput" class="tool-output" readonly value="Hash will appear here">
+    <button type="button" id="hgCopyBtn" class="tool-icon-btn" title="Copy to clipboard">
+        <i class="fa-solid fa-copy"></i>
+    </button>
+</div>
+
+<button type="button" id="hgGenerateBtn" class="tool-action-btn">
+    <i class="fa-solid fa-fingerprint"></i>
+    Generate Hash
+</button>
+
+</div>
+
+
+
+<div class="tool-card" id="passwordCheckerCard">
+
+<div class="tool-card-header">
+    <i class="fa-solid fa-shield-halved"></i>
+    <h3>Password Strength Checker</h3>
+</div>
+
+<p class="tool-card-desc">
+    Check how strong a password is before you use it. This runs
+    entirely in your browser — the password you type is never sent
+    anywhere or stored.
+</p>
+
+<div class="tool-output-row">
+    <input type="password" id="pscInput" class="tool-output" placeholder="Type a password to check...">
+    <button type="button" id="pscToggleBtn" class="tool-icon-btn" title="Show/hide password">
+        <i class="fa-solid fa-eye"></i>
+    </button>
+</div>
+
+<div class="tool-strength-row">
+    <div class="tool-strength-bar">
+        <div id="pscStrengthFill" class="tool-strength-fill"></div>
+    </div>
+    <span id="pscStrengthLabel" class="tool-strength-label">—</span>
+</div>
+
+<ul class="tool-checklist" id="pscChecklist">
+    <li id="pscRuleLength"><i class="fa-solid fa-circle-xmark"></i> At least 12 characters</li>
+    <li id="pscRuleUpperLower"><i class="fa-solid fa-circle-xmark"></i> Mix of uppercase &amp; lowercase</li>
+    <li id="pscRuleNumber"><i class="fa-solid fa-circle-xmark"></i> Contains a number</li>
+    <li id="pscRuleSymbol"><i class="fa-solid fa-circle-xmark"></i> Contains a symbol</li>
+    <li id="pscRuleCommon"><i class="fa-solid fa-circle-xmark"></i> Not a commonly leaked password</li>
+</ul>
+
+<p class="tool-card-desc" id="pscCrackTime" style="margin-bottom:0;">
+    Estimated time to crack: —
+</p>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+</section>
+
+</main>
+
+
+
+
+
+
+<script src="assets/js/script.js"></script>
+
+    
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/matrix.js"></script>
+<script src="assets/js/chatbot.js"></script>
+<script src="assets/js/toolkit.js"></script>
+<div class="signin-overlay" id="signInOverlay">
+        <div class="signin-modal">
+            <button class="signin-close" id="signInClose" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="signin-tag">Welcome</span>
+            <h2 class="signin-title">Sign In to Continue</h2>
+            <p class="signin-subtitle">Access exclusive updates from Shubham Kumar's portfolio.</p>
+
+            <div class="signin-options">
+
+                <button class="signin-option google" id="googleSignInBtn" type="button">
+                    <i class="fa-brands fa-google"></i>
+                    Continue with Google
+                </button>
+
+                <button class="signin-option facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                    Continue with Facebook
+                </button>
+
+            </div>
+
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="tabSignIn" data-tab="signin">Sign In</button>
+                <button type="button" class="auth-tab" id="tabSignUp" data-tab="signup">Create Account</button>
+            </div>
+
+            <div class="auth-alert" id="authAlert"></div>
+
+            <form class="auth-form active" id="signInForm" data-mode="signin">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+                <a href="#" id="forgotPasswordLink" class="forgot-password-link">Forgot password?</a>
+                <button type="submit" class="signin-submit"><span>Sign In</span></button>
+            </form>
+
+            <form class="auth-form" id="signUpForm" data-mode="signup">
+                <input type="text" name="name" placeholder="Full name" required autocomplete="name">
+                <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+                <input type="password" name="password" placeholder="Create password (min 6 chars)" required minlength="6" autocomplete="new-password">
+                <input type="password" name="confirm" placeholder="Confirm password" required minlength="6" autocomplete="new-password">
+                <button type="submit" class="signin-submit"><span>Create Account</span></button>
+            </form>
+
+            <p class="signin-note">Your account is securely stored on our server (MySQL + hashed password).</p>
+
+        </div>
+    </div>
+
+    </body>
+</html>

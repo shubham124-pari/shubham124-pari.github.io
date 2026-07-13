@@ -1,0 +1,15 @@
+server/.env
+server/__pycache__/
+server/**/__pycache__/
+*.pyc
+server/database/database.db
+
+# Virtual environment (whichever name/location you used)
+venv/
+.venv/
+server/venv/
+server/.venv/
+
+# User-uploaded files — never commit real people's photos/resumes/certs
+server/uploads/*
+!server/uploads/.gitkeep
