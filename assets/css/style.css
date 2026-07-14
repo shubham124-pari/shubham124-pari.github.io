@@ -5862,6 +5862,19 @@ padding-bottom:75px;
 
 }
 
+/* Bottom nav sits on top (z-index 999999) and occupies the bottom 65px
+   of the screen, so anything else fixed near the bottom (chat bubble)
+   must sit above that band or it gets visually buried under the nav. */
+.chat-bubble{
+    bottom:85px !important;
+    right:16px !important;
+    z-index:1000000 !important;
+}
+
+.chat-window{
+    bottom:155px !important;
+}
+
 }
 
 
