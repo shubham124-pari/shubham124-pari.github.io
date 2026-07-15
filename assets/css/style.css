@@ -101,12 +101,7 @@ img{
 .services-container,
 .contact-container,
 .nav-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 18px;
-    height: 70px;
+    width:100%;
 }
 
 h1,h2,h3,.nav-logo,.hero-title,.section-title,.loader-title{
@@ -328,13 +323,7 @@ ul{
 
     z-index:1100;
 
-
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
-
 
 
 
@@ -4009,20 +3998,7 @@ html{
     .services,
     .contact{
         padding:100px 0 60px;
-
-
-        .nav-logo{
-    margin-right: auto;
-}
-
-
-    margin-left: auto;
-
-
-.nav-actions{
-    margin-left: auto;
-}
-}
+    }
 
     .about-container,
     .skills-container,
